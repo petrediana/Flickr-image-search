@@ -15,15 +15,6 @@ class MainMenu extends Component {
 
         this.photoStore = new PhotoStore();
 
-        this.handleChange = (evt) => {
-            if (this.checkIfInputIsNotNull(evt.target.value)) {
-                this.setTargetedValue(evt.target.name, evt.target.value);
-                this.applySearchAfterUserInput(evt.target.value);                
-            } else {
-                this.setPictures([]);
-            }
-        };
-
         this.checkIfInputIsNotNull = (input) => {
             return input.trim().length > 0 ? true : false;
         };
@@ -54,6 +45,15 @@ class MainMenu extends Component {
 
         this.applySearchAfterUserInput = (searchInput) => {
             this.photoStore.getPicturesThatMatchUsersInput(searchInput, 1);                
+        };
+
+        this.handleChange = (evt) => {
+            if (this.checkIfInputIsNotNull(evt.target.value)) {
+                this.setTargetedValue(evt.target.name, evt.target.value);
+                this.applySearchAfterUserInput(evt.target.value);                
+            } else {
+                this.setPictures([]);
+            }
         };
 
         this.handleScroll = async () => {
