@@ -21,15 +21,16 @@ class PhotoStore {
     }
 
     getFilteredPictures(tokenToContain, photoList) {
-        return photoList.filter(element => element.title.includes(tokenToContain));
+        return photoList.filter(picture => picture.title.includes(tokenToContain));
     }
 
     async getPicturesThatMatchUsersInput(userInput) {
         try {
             const request = await fetch(API_URL);
             const response = await request.json();
-            console.log(response);
-
+            //console.log(response);
+            
+            const filteredPicturesWithUserInput = this.getFilteredPictures(userInput, response.photos.photo);
             this.picturesArr = response.photos.photo.map(pic => {
                 if (pic.title.includes(userInput)) {
                     const picSrcPath = this.getPictureSrcPath(pic);
@@ -47,7 +48,7 @@ class PhotoStore {
         try {
             const request = await fetch(API_WITH_CAT_TAG);
             const response = await request.json();
-            console.log(response);
+            //console.log(response);
 
             const filteredCatPictures = this.getFilteredPictures('cat', response.photos.photo);
             this.picturesArr = filteredCatPictures.map(pic => {
@@ -58,6 +59,22 @@ class PhotoStore {
         } catch (err) {
             console.warn(err);
             this.emitter.emit('GET_TEST_CATS_ERROR');
+        }
+    }
+
+    async testGetAllPhotos() {
+        try {
+            const request = await fetch(API_URL);
+            const response = await request.json();
+
+            this.picturesArr = response.photos.photo.map(pic => {
+                const picSrcPath = this.getPictureSrcPath(pic);
+                return picSrcPath;
+            });
+            this.emitter.emit('GET_TEST_ALL_SUCCESS');
+        } catch (err) {
+            console.warn(err);
+            this.emitter.emit('GET_TEST_ALL__ERROR');
         }
     }
 }
