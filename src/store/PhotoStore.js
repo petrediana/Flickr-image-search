@@ -20,6 +20,25 @@ class PhotoStore {
         return picSrcPath;
     }
 
+    async getPicturesThatMatchUsersInput(userInput) {
+        try {
+            const request = await fetch(API_URL);
+            const response = await request.json();
+            console.log(response);
+
+            this.picturesArr = response.photos.photo.map(pic => {
+                if (pic.title.includes(userInput)) {
+                    const picSrcPath = this.getPictureSrcPath(pic);
+                    return picSrcPath;
+                }
+            });
+            this.emitter.emit('GET_USERS_PICTURES_SUCCESS');
+        } catch (err) {
+            console.warn(err);
+            this.emitter.emit('GET_USERS_PICTURES_ERROR');
+        }
+    }
+
     async testCatsTag() {
         try {
             const request = await fetch(API_WITH_CAT_TAG);
