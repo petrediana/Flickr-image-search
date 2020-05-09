@@ -22,7 +22,7 @@ class PhotoStore {
 
     async getPicturesThatMatchUsersInput(userInput) {
         try {
-            const request = await fetch(`${API_URL}&tags=${userInput}`);
+            const request = await fetch(`${API_URL}&text=${userInput}&sort=relevance`);
             const response = await request.json();
             //console.log(response);
             
