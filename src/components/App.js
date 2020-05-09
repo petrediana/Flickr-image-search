@@ -6,11 +6,11 @@ class App extends Component {
   render() {
     console.log(config);
     return (
-      <div>
+      <div style={{ backgroundColor: "#eee" }}>
           App started
           <MainMenu/>
       </div>
-    )
+    );
   }
 }
 
