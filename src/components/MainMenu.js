@@ -8,7 +8,8 @@ class MainMenu extends Component {
 
         this.state = {
             pictures: [],
-            pictureFilter: ''
+            pictureFilter: '',
+            isExecuted: false
         };
 
         this.photoStore = new PhotoStore();
@@ -38,8 +39,27 @@ class MainMenu extends Component {
             });
         };
 
+        this.setIsExecuted = (value) => {
+            this.setState({
+                isExecuted: value
+            });
+        };
+
         this.applySearchAfterUserInput = (searchInput) => {
             this.photoStore.getPicturesThatMatchUsersInput(searchInput);                
+        };
+
+        this.handleScroll = () => {
+            if (window.scrollY > (document.body.offsetHeight - window.outerHeight) && !this.state.isExecuted) {
+                this.setIsExecuted(true);
+                
+                // Your code goes here
+                console.log("Working...");
+
+                setTimeout(() => {
+                    this.setIsExecuted(false);
+                }, 1000);
+            }    
         };
     }
 
@@ -49,7 +69,7 @@ class MainMenu extends Component {
           }
         );
 
-        
+        window.addEventListener('scroll', this.handleScroll);
     }
 
     render() {
