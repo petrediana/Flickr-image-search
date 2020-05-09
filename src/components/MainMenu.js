@@ -6,7 +6,8 @@ class MainMenu extends Component {
         super();
 
         this.state = {
-            pictures: []
+            pictures: [],
+            pictureFilter: ''
         };
 
         this.photoStore = new PhotoStore();
@@ -26,6 +27,10 @@ class MainMenu extends Component {
         return (
             <div>
                 Main menu
+                <div>
+                    <input type="text" id="picture-filter" name="pictureFilter" placeholder="Search Pics"
+                        onChange={this.handleChange} />
+                </div>
                 <div>
                     { this.state.pictures.map((e, i) => 
                         <img alt="cats" src={e} key={i}></img>)
