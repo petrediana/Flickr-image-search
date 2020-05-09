@@ -20,6 +20,10 @@ class PhotoStore {
         return picSrcPath;
     }
 
+    getFilteredPictures(tokenToContain, photoList) {
+        return photoList.filter(element => element.title.includes(tokenToContain));
+    }
+
     async getPicturesThatMatchUsersInput(userInput) {
         try {
             const request = await fetch(API_URL);
@@ -45,9 +49,7 @@ class PhotoStore {
             const response = await request.json();
             console.log(response);
 
-            const filteredCatPictures = response.photos.photo
-                .filter(pic => pic.title.includes('cat'));
-
+            const filteredCatPictures = this.getFilteredPictures('cat', response.photos.photo);
             this.picturesArr = filteredCatPictures.map(pic => {
                 const picSrcPath = this.getPictureSrcPath(pic);
                 return picSrcPath;
