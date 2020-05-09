@@ -9,7 +9,8 @@ class MainMenu extends Component {
         this.state = {
             pictures: [],
             pictureFilter: '',
-            isExecuted: false
+            isExecuted: false,
+            currentPage: 2
         };
 
         this.photoStore = new PhotoStore();
@@ -39,6 +40,12 @@ class MainMenu extends Component {
             });
         };
 
+        this.increaseCurrentPage = () => {
+            this.setState({
+                currentPage: this.state.currentPage + 1
+            });
+        };
+
         this.setIsExecuted = (value) => {
             this.setState({
                 isExecuted: value
@@ -46,15 +53,15 @@ class MainMenu extends Component {
         };
 
         this.applySearchAfterUserInput = (searchInput) => {
-            this.photoStore.getPicturesThatMatchUsersInput(searchInput);                
+            this.photoStore.getPicturesThatMatchUsersInput(searchInput, 1);                
         };
 
-        this.handleScroll = () => {
+        this.handleScroll = async () => {
             if (window.scrollY > (document.body.offsetHeight - window.outerHeight) && !this.state.isExecuted) {
                 this.setIsExecuted(true);
                 
-                // Your code goes here
-                console.log("Working...");
+                await this.photoStore.getPicturesThatMatchUsersInput(this.state.pictureFilter, this.state.currentPage);
+                this.increaseCurrentPage();
 
                 setTimeout(() => {
                     this.setIsExecuted(false);
