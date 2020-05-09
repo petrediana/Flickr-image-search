@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PhotoStore from '../store/PhotoStore';
 import  ImageGrid from './ImageGrid/ImageGrid';
+import  Navbar  from './Navbar/Navbar';
+import './MainMenu.css';
 
 class MainMenu extends Component {
     constructor() {
@@ -82,12 +84,8 @@ class MainMenu extends Component {
     render() {
         return (
             <div>
-                Main menu
-                <div>
-                    <input type="text" id="picture-filter" name="pictureFilter" placeholder="Search Pics"
-                        onChange={this.handleChange} />
-                </div>
-                <ImageGrid images={this.state.pictures}/>
+                <Navbar onSearchInputChange={this.handleChange} />
+                <ImageGrid className="image-grid" images={this.state.pictures}/>
             </div>
         )
     }
