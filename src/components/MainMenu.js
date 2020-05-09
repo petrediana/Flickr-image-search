@@ -11,6 +11,13 @@ class MainMenu extends Component {
         };
 
         this.photoStore = new PhotoStore();
+
+        this.handleChange = (evt) => {
+            this.setState({
+                [evt.target.name]: evt.target.value
+            });
+            console.log(evt.target.value)
+        }
     }
 
     componentDidMount() {
