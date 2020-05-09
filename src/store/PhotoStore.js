@@ -12,6 +12,7 @@ class PhotoStore {
     constructor() {
         this.emitter = new EventEmitter();
         this.picturesArr = [];
+        this.previousUserInput = '';
     }
 
     getPictureSrcPath(pic) {
@@ -20,16 +21,23 @@ class PhotoStore {
         return picSrcPath;
     }
 
-    async getPicturesThatMatchUsersInput(userInput) {
+    clearListWhenInputChanged(userInput) {
+        if (userInput !== this.previousUserInput) {
+            this.previousUserInput = userInput;
+            this.picturesArr = [];
+        }
+    }
+
+    async getPicturesThatMatchUsersInput(userInput, pageNo) {
         try {
-            const request = await fetch(`${API_URL}&text=${userInput}&sort=relevance`);
+            const request = await fetch(`${API_URL}&text=${userInput}&sort=relevance&per_page=${20}&page=${pageNo}`);
             const response = await request.json();
-            //console.log(response);
             
-            this.picturesArr = response.photos.photo.map(pic => {
+            this.clearListWhenInputChanged(userInput);
+            this.picturesArr = this.picturesArr.concat(response.photos.photo.map(pic => {
                 const picSrcPath = this.getPictureSrcPath(pic);
                 return picSrcPath;
-            });
+            }));
             this.emitter.emit('GET_USERS_PICTURES_SUCCESS');
         } catch (err) {
             console.warn(err);
