@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PhotoStore from '../store/PhotoStore';
+import  ImageGrid from './ImageGrid/ImageGrid';
 
 class MainMenu extends Component {
     constructor() {
@@ -38,14 +39,15 @@ class MainMenu extends Component {
         };
 
         this.applySearchAfterUserInput = (searchInput) => {
-            this.photoStore.getPicturesThatMatchUsersInput(searchInput);
-                this.photoStore.emitter.addListener('GET_USERS_PICTURES_SUCCESS', () => {
-                    this.setPictures(this.photoStore.picturesArr);
-                });
+            this.photoStore.getPicturesThatMatchUsersInput(searchInput);                
         };
     }
 
     componentDidMount() {
+        this.photoStore.emitter.addListener('GET_USERS_PICTURES_SUCCESS', () => {
+            this.setPictures(this.photoStore.picturesArr);
+          }
+        );
         // this.photoStore.emitter.addListener('GET_TEST_ALL_SUCCESS', () => {
         //     this.setState({
         //         pictures: this.photoStore.picturesArr
@@ -62,12 +64,7 @@ class MainMenu extends Component {
                     <input type="text" id="picture-filter" name="pictureFilter" placeholder="Search Pics"
                         onChange={this.handleChange} />
                 </div>
-                <div>
-                    {  
-                        this.state.pictures.map((e, i) => 
-                        <img alt={this.pictureFilter} src={e} key={i}></img>)
-                    }
-                </div>
+                <ImageGrid images={this.state.pictures}/>
             </div>
         )
     }
