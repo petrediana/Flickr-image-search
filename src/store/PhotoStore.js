@@ -45,7 +45,10 @@ class PhotoStore {
             const response = await request.json();
             console.log(response);
 
-            this.picturesArr = response.photos.photo.map(pic => {
+            const filteredCatPictures = response.photos.photo
+                .filter(pic => pic.title.includes('cat'));
+
+            this.picturesArr = filteredCatPictures.map(pic => {
                 const picSrcPath = this.getPictureSrcPath(pic);
                 return picSrcPath;
             });

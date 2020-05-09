@@ -17,17 +17,25 @@ class MainMenu extends Component {
                 [evt.target.name]: evt.target.value
             });
             console.log(evt.target.value)
+
+            this.photoStore.getPicturesThatMatchUsersInput(evt.target.value);
+            this.photoStore.emitter.addListener('GET_USERS_PICTURES_SUCCESS', () => {
+                this.setState({
+                    pictures: this.photoStore.picturesArr
+                });
+            });
+
+            console.log(this.photoStore.picturesArr)
         }
     }
 
     componentDidMount() {
-        this.photoStore.testCatsTag();
         this.photoStore.emitter.addListener('GET_TEST_CATS_SUCCESS', () => {
             this.setState({
                 pictures: this.photoStore.picturesArr
             });
         });
-
+        this.photoStore.testCatsTag();
     }
 
     render() {
