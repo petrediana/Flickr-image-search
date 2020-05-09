@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import PhotoStore from '../store/PhotoStore';
 import  ImageGrid from './ImageGrid/ImageGrid';
 
@@ -48,12 +48,8 @@ class MainMenu extends Component {
             this.setPictures(this.photoStore.picturesArr);
           }
         );
-        // this.photoStore.emitter.addListener('GET_TEST_ALL_SUCCESS', () => {
-        //     this.setState({
-        //         pictures: this.photoStore.picturesArr
-        //     });
-        // });
-        // this.photoStore.testGetAllPhotos();
+
+        
     }
 
     render() {
