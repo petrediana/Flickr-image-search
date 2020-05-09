@@ -26,9 +26,11 @@ class MainMenu extends Component {
         return (
             <div>
                 Main menu
-                { this.state.pictures.map((e, i) => 
-                    <img alt="cats" src={e} key={i}></img>)
-                }
+                <div>
+                    { this.state.pictures.map((e, i) => 
+                        <img alt="cats" src={e} key={i}></img>)
+                    }
+                </div>
             </div>
         )
     }

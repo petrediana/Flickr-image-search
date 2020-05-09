@@ -1,5 +1,4 @@
 import { EventEmitter } from 'fbemitter';
-import React from 'react';
 import config from '../constants/config';
 const API = 'https://api.flickr.com/services/rest/?method=flickr.photos.search&safe_search=1&format=json&nojsoncallback=1&'
             + 'api_key=' + config
