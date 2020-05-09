@@ -20,22 +20,15 @@ class PhotoStore {
         return picSrcPath;
     }
 
-    getFilteredPictures(tokenToContain, photoList) {
-        return photoList.filter(picture => picture.title.includes(tokenToContain));
-    }
-
     async getPicturesThatMatchUsersInput(userInput) {
         try {
-            const request = await fetch(API_URL);
+            const request = await fetch(`${API_URL}&tags=${userInput}`);
             const response = await request.json();
             //console.log(response);
             
-            const filteredPicturesWithUserInput = this.getFilteredPictures(userInput, response.photos.photo);
             this.picturesArr = response.photos.photo.map(pic => {
-                if (pic.title.includes(userInput)) {
-                    const picSrcPath = this.getPictureSrcPath(pic);
-                    return picSrcPath;
-                }
+                const picSrcPath = this.getPictureSrcPath(pic);
+                return picSrcPath;
             });
             this.emitter.emit('GET_USERS_PICTURES_SUCCESS');
         } catch (err) {
@@ -50,8 +43,7 @@ class PhotoStore {
             const response = await request.json();
             //console.log(response);
 
-            const filteredCatPictures = this.getFilteredPictures('cat', response.photos.photo);
-            this.picturesArr = filteredCatPictures.map(pic => {
+            this.picturesArr = response.photos.photo.map(pic => {
                 const picSrcPath = this.getPictureSrcPath(pic);
                 return picSrcPath;
             });
