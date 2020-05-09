@@ -13,29 +13,45 @@ class MainMenu extends Component {
         this.photoStore = new PhotoStore();
 
         this.handleChange = (evt) => {
+            if (this.checkIfInputIsNotNull(evt.target.value)) {
+                this.setTargetedValue(evt.target.name, evt.target.value);
+                this.applySearchAfterUserInput(evt.target.value);                
+            } else {
+                this.setPictures([]);
+            }
+        };
+
+        this.checkIfInputIsNotNull = (input) => {
+            return input.trim().length > 0 ? true : false;
+        };
+
+        this.setTargetedValue = (targetName, targetValue) => {
             this.setState({
-                [evt.target.name]: evt.target.value
+                [targetName]: targetValue
             });
-            console.log(evt.target.value)
+        };
 
-            this.photoStore.getPicturesThatMatchUsersInput(evt.target.value);
-            this.photoStore.emitter.addListener('GET_USERS_PICTURES_SUCCESS', () => {
-                this.setState({
-                    pictures: this.photoStore.picturesArr
+        this.setPictures = (value) => {
+            this.setState({
+                pictures: value
+            });
+        };
+
+        this.applySearchAfterUserInput = (searchInput) => {
+            this.photoStore.getPicturesThatMatchUsersInput(searchInput);
+                this.photoStore.emitter.addListener('GET_USERS_PICTURES_SUCCESS', () => {
+                    this.setPictures(this.photoStore.picturesArr);
                 });
-            });
-
-            console.log(this.photoStore.picturesArr)
-        }
+        };
     }
 
     componentDidMount() {
-        this.photoStore.emitter.addListener('GET_TEST_CATS_SUCCESS', () => {
-            this.setState({
-                pictures: this.photoStore.picturesArr
-            });
-        });
-        this.photoStore.testCatsTag();
+        // this.photoStore.emitter.addListener('GET_TEST_ALL_SUCCESS', () => {
+        //     this.setState({
+        //         pictures: this.photoStore.picturesArr
+        //     });
+        // });
+        // this.photoStore.testGetAllPhotos();
     }
 
     render() {
@@ -47,8 +63,9 @@ class MainMenu extends Component {
                         onChange={this.handleChange} />
                 </div>
                 <div>
-                    { this.state.pictures.map((e, i) => 
-                        <img alt="cats" src={e} key={i}></img>)
+                    {  
+                        this.state.pictures.map((e, i) => 
+                        <img alt={this.pictureFilter} src={e} key={i}></img>)
                     }
                 </div>
             </div>
