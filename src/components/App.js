@@ -4,7 +4,6 @@ import MainMenu from '../components/MainMenu';
 
 class App extends Component {
   render() {
-    console.log(config);
     return (
       <div style={{ backgroundColor: "#eee" }}>
           App started
