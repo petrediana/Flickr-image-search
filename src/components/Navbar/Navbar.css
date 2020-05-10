@@ -19,6 +19,7 @@ nav {
     border: none;
     height: 2rem;
     align-items: center;
+    margin: 0 2rem;
 }
 
 svg {

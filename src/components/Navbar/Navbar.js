@@ -15,7 +15,7 @@ class Navbar extends Component {
           this.props.className ? this.props.className : ""
         } elevation-3`}
       >
-        <div className="search-container" tabIndex="0">
+        <div className="search-container">
           {searchIcon}
           <input
             type="text"
@@ -25,8 +25,22 @@ class Navbar extends Component {
             onChange={this.props.onSearchInputChange}
           />
         </div>
+        <select
+          name="sort-by"
+          id="sort-by"
+          onChange={() => this.props.onSortByOptionChange(this.getSelectedValue())}
+        >
+          <option value="relevance">Relevance</option>
+          <option value="date-posted-asc">Date posted (asc.)</option>
+          <option value="date-posted-desc">Date posted (desc.)</option>
+        </select>
       </nav>
     );
+  }
+
+  getSelectedValue() {
+    const select = document.getElementById('sort-by');
+    return select.options[select.selectedIndex].value;
   }
 }
 
