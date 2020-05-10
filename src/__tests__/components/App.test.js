@@ -8,13 +8,13 @@ import MainMenu from '../../components/MainMenu';
 configure({ adapter: new Adapter() })
 
 describe('<App />', () => {
-    test('App renders without crashing', () => {
+    it('App renders without crashing', () => {
         const div = document.createElement('div');
         ReactDOM.render(<App />, div);
         ReactDOM.unmountComponentAtNode(div);
     });
     
-    test('App contains MainMenu component', () => {
+    it('App contains MainMenu component', () => {
         const component = shallow(<App />);
         expect(component.contains(<MainMenu />)).toEqual(true);
     });
