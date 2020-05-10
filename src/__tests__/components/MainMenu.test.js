@@ -1,7 +1,7 @@
 import React from 'react';
-import { shallow, mount, render, configure } from 'enzyme';
-import { expect } from 'chai';
+import { configure, mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
+import { expect } from 'chai';
 
 import MainMenu from '../../components/MainMenu';
 import ImageGrid from '../../components/ImageGrid/ImageGrid';
