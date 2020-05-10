@@ -12,7 +12,7 @@ class MainMenu extends Component {
             pictures: [],
             pictureFilter: "",
             isExecuted: false,
-            currentPage: 2,
+            currentPage: 1,
             totalPicturesCount: null,
         };
 
@@ -44,13 +44,14 @@ class MainMenu extends Component {
             });
         };
 
-        this.applySearchAfterUserInput = (userInput, sortBy) => {
-            getFetchPromise(userInput, sortBy).then((data) => {
+        this.applySearchAfterUserInput = (userInput, sortBy, pageNo) => {
+            getFetchPromise(userInput, sortBy, pageNo).then((data) => {
                 const { pictures, total } = data;
                 if (
                     userInput === this.state.pictureFilter &&
                     sortBy === this.state.sortBy
                 ) {
+                    this.increaseCurrentPage();
                     this.setPictures(pictures);
                     this.setTargetedValue("totalPicturesCount", total);
                 }
@@ -60,9 +61,11 @@ class MainMenu extends Component {
         this.handleSearchInputChange = (evt) => {
             this.setTargetedValue(evt.target.name, evt.target.value);
             if (this.checkIfInputIsNotNull(evt.target.value)) {
+                this.setTargetedValue("currentPage", 1);
                 this.applySearchAfterUserInput(
                     evt.target.value,
-                    this.state.sortBy
+                    this.state.sortBy,
+                    1
                 );
             } else {
                 this.setPictures([]);
@@ -79,13 +82,14 @@ class MainMenu extends Component {
 
                 await getFetchPromise(
                     this.state.pictureFilter,
+                    this.state.sortBy,
                     this.state.currentPage
                 ).then((data) => {
                     const { pictures } = data;
                     const result = this.state.pictures.concat(pictures);
+                    this.increaseCurrentPage();
                     this.setPictures(result);
                 });
-                this.increaseCurrentPage();
                 this.setIsExecuted(false);
             }
         };
@@ -93,8 +97,13 @@ class MainMenu extends Component {
         this.handleSortByOptionChange = (value) => {
             console.log(value, this.state.pictureFilter);
             this.setTargetedValue("sortBy", value);
+            this.setTargetedValue("currentPage", 1);
             if (this.state.pictureFilter && this.state.pictureFilter !== "") {
-                this.applySearchAfterUserInput(this.state.pictureFilter, value);
+                this.applySearchAfterUserInput(
+                    this.state.pictureFilter,
+                    value,
+                    this.state.currentPage
+                );
             }
         };
     }
