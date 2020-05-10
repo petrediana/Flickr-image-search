@@ -1,8 +1,7 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render } from "@testing-library/react";
 import { mount, configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-
 import Navbar from '../../components/Navbar/Navbar.js';
 
 configure({ adapter: new Adapter() });
