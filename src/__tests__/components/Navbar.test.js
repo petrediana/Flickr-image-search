@@ -6,16 +6,16 @@ import Navbar from '../../components/Navbar/Navbar.js';
 
 configure({ adapter: new Adapter() });
 
-describe('<Navbar />', () => {
-  it('NavBar renders without crashing', () => {
-    render(<Navbar />);
-  });
+describe("Navbar", () => {
+    it("renders without crashing", () => {
+        render(<Navbar />);
+    });
 
-  it(`sets the handler for the <input>'s onChange event to the component's "onSearchInputChange" prop`, () => {
-    const handler = () => {};
-    const component = mount(<Navbar onSearchInputChange={handler}/>);
+    it(`sets the handler for the <input>'s onChange event to the component's "onSearchInputChange" prop`, () => {
+        const handler = () => {};
+        const component = mount(<Navbar onSearchInputChange={handler} />);
 
-    const input = component.find('input');
-    expect(input.props().onChange).toBe(handler);
-  });
+        const input = component.find("input");
+        expect(input.props().onChange).toBe(handler);
+    });
 });

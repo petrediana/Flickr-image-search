@@ -9,16 +9,16 @@ import ImageCell from '../../components/ImageCell/ImageCell.js';
 
 configure({ adapter: new Adapter() });
 
-describe('<ImageGrid/>', () => {
-  it('ImageGrid renders without crashing', () => {
-    shallow(<ImageGrid images={[]}/>);
-  });
+describe("ImageGrid", () => {
+    it("renders without crashing", () => {
+        shallow(<ImageGrid images={[]} />);
+    });
 
-  it('renders an <ImageCell /> for each image in the images prop', () => {
-    const images = Array(10).fill("");
-    const component = mount(<ImageGrid images={images} />);
+    it("renders an <ImageCell> for each image in the images prop", () => {
+        const images = Array(10).fill("");
+        const component = mount(<ImageGrid images={images} />);
 
-    const imageCells = component.find(ImageCell);
-    expect(imageCells.length).to.eq(10);
-  });
+        const imageCells = component.find(ImageCell);
+        expect(imageCells.length).to.eq(10);
+    });
 });
