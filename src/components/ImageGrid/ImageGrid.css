@@ -13,3 +13,11 @@
 .image-grid-container > .image-cell {
     margin: 1rem;
 }
+
+.empty-placeholder {
+    max-height: 15rem;
+}
+
+.empty-placeholder + h2 {
+    color: #000;
+}
