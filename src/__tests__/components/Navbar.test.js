@@ -1,12 +1,13 @@
 import React from 'react';
-import { render } from "@testing-library/react";
+import { render } from '@testing-library/react';
 import { mount, configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
+import sinon from 'sinon';
 import Navbar from '../../components/Navbar/Navbar.js';
 
 configure({ adapter: new Adapter() });
 
-describe("Navbar", () => {
+describe("<Navbar />", () => {
     it("renders without crashing", () => {
         render(<Navbar />);
     });
