@@ -26,21 +26,9 @@ class MainMenu extends Component {
             });
         };
 
-        this.setPictures = (value) => {
-            this.setState({
-                pictures: value,
-            });
-        };
-
         this.increaseCurrentPage = () => {
             this.setState({
                 currentPage: this.state.currentPage + 1,
-            });
-        };
-
-        this.setIsExecuted = (value) => {
-            this.setState({
-                isExecuted: value,
             });
         };
 
@@ -52,8 +40,8 @@ class MainMenu extends Component {
                     sortBy === this.state.sortBy
                 ) {
                     this.increaseCurrentPage();
-                    this.setPictures(pictures);
-                    this.setTargetedValue("totalPicturesCount", total);
+                    this.setTargetedValue('pictures', pictures);
+                    this.setTargetedValue('totalPicturesCount', total);
                 }
             });
         };
@@ -61,14 +49,14 @@ class MainMenu extends Component {
         this.handleSearchInputChange = (evt) => {
             this.setTargetedValue(evt.target.name, evt.target.value);
             if (this.checkIfInputIsNotNull(evt.target.value)) {
-                this.setTargetedValue("currentPage", 1);
+                this.setTargetedValue('currentPage', 1);
                 this.applySearchAfterUserInput(
                     evt.target.value,
                     this.state.sortBy,
                     1
                 );
             } else {
-                this.setPictures([]);
+                this.setTargetedValue('pictures', []);
             }
         };
 
@@ -79,7 +67,7 @@ class MainMenu extends Component {
                 !this.state.isExecuted &&
                 this.checkIfInputIsNotNull(this.state.pictureFilter)
             ) {
-                this.setIsExecuted(true);
+                this.setTargetedValue('isExecuted', true);
 
                 await getFetchPromise(
                     this.state.pictureFilter,
@@ -89,9 +77,9 @@ class MainMenu extends Component {
                     const { pictures } = data;
                     const result = this.state.pictures.concat(pictures);
                     this.increaseCurrentPage();
-                    this.setPictures(result);
+                    this.setTargetedValue('pictures', result);
                 });
-                this.setIsExecuted(false);
+                this.setTargetedValue('isExecuted', false);
             }
         };
 
