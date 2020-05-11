@@ -8,6 +8,13 @@ const searchIcon = (
 );
 
 class Navbar extends Component {
+    constructor(props) {
+        super(props);
+
+        this.getResultsCount = this.getResultsCount.bind(this);
+        this.handleFiltersChange = this.handleFiltersChange.bind(this);
+    }
+
     render() {
         return (
             <nav
@@ -23,17 +30,13 @@ class Navbar extends Component {
                             id="picture-filter"
                             name="pictureFilter"
                             placeholder="Search Pics"
-                            onChange={this.props.onSearchInputChange}
+                            onChange={this.handleFiltersChange}
                         />
                     </div>
                     <select
-                        name="sort-by"
+                        name="sortBy"
                         id="sort-by"
-                        onChange={() =>
-                            this.props.onSortByOptionChange(
-                                this.getSelectedValue()
-                            )
-                        }
+                        onChange={this.handleFiltersChange}
                     >
                         <option value="relevance">Relevance</option>
                         <option value="date-posted-asc">
@@ -66,6 +69,12 @@ class Navbar extends Component {
     getResultsCount() {
         const { resultsCount } = this.props;
         return resultsCount ? resultsCount : "";
+    }
+
+    handleFiltersChange() {
+        const pictureFilter = this.getInputValue();
+        const sortBy = this.getSelectedValue();
+        this.props.onFiltersChange({ pictureFilter, sortBy });
     }
 }
 
