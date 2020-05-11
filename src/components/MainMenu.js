@@ -1,8 +1,8 @@
-import React, { Component } from "react";
-import ImageGrid from "./ImageGrid/ImageGrid";
-import Navbar from "./Navbar/Navbar";
-import "./MainMenu.css";
-import getFetchPromise from "../lib/picturesRetriever";
+import React, { Component } from 'react';
+import ImageGrid from './ImageGrid/ImageGrid';
+import Navbar from './Navbar/Navbar';
+import './MainMenu.css';
+import getFetchPromise from '../lib/picturesRetriever';
 
 class MainMenu extends Component {
     constructor() {
@@ -10,7 +10,7 @@ class MainMenu extends Component {
 
         this.state = {
             pictures: [],
-            pictureFilter: "",
+            pictureFilter: '',
             isExecuted: false,
             currentPage: 1,
             totalPicturesCount: null,
@@ -76,7 +76,8 @@ class MainMenu extends Component {
             if (
                 window.scrollY >
                     document.body.offsetHeight - window.outerHeight &&
-                !this.state.isExecuted
+                !this.state.isExecuted &&
+                this.checkIfInputIsNotNull(this.state.pictureFilter)
             ) {
                 this.setIsExecuted(true);
 
