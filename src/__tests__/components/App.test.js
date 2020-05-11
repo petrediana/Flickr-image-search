@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { shallow, mount, render, configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import App from '../../components/App';
-import MainMenu from '../../components/MainMenu';
+import Main from '../../components/Main';
 
 configure({ adapter: new Adapter() })
 
@@ -14,9 +14,9 @@ describe('<App />', () => {
         ReactDOM.unmountComponentAtNode(div);
     });
     
-    it('App contains MainMenu component', () => {
+    it('App contains Main component', () => {
         const component = shallow(<App />);
-        expect(component.contains(<MainMenu />)).toEqual(true);
+        expect(component.contains(<Main />)).toEqual(true);
     });
 });
 
